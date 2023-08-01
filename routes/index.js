@@ -6,18 +6,31 @@ const Category = require("../models/category");
 /* GET home page. */
 router.get("/", async (req, res) => {
   try {
-    const products = await Product.find({})
-      .sort("-createdAt")
-      .populate("category")
-      .limit(3);
+    const categories = await Category.aggregate([
+      {
+        $lookup: {
+          from: 'products', localField: '_id',
+          foreignField: 'category', as: 'products'
+        },
+      },
+    ]);
 
-    const categories = await Category.find({});
-
-    res.render("index", { pageName: "Trang chủ", products, categories});
+    res.render("index", { pageName: "Trang chủ", categories });
   } catch (error) {
     console.log(error);
     res.redirect("/");
   }
 });
 
-module.exports = router;
+/* GET about us. */
+router.get("/about-us", async (req, res) => {
+  res.render("about", { pageName: "Thông tin" });
+});
+
+router.get("/contact", async (req, res) => {
+  res.render("contact", { pageName: "Liên hệ" });
+});
+
+
+
+module.exports = router;   

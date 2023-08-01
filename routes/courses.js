@@ -16,11 +16,14 @@ router.get("/", async (req, res) => {
       .limit(perPage)
       .populate("category");
 
+    const categories = await Category.find({});
+
     const count = await Product.count();
-    console.log(products);
+    // console.log(products);
     res.render("courses", {
       pageName: "Khóa học",
       products,
+      categories,
       current: page,
       breadcrumbs: null,
       home: "/courses/?",
@@ -46,12 +49,17 @@ router.get("/search", async (req, res) => {
       .limit(perPage)
       .populate("category")
       .exec();
+
     const count = await Product.count({
       title: { $regex: req.query.search, $options: "i" },
     });
+
+    const categories = await Category.find({});
+
     res.render("courses", {
       pageName: "Tìm kiếm",
       products,
+      categories,
       current: page,
       breadcrumbs: null,
       home: "/courses/search?search=" + req.query.search + "&",
@@ -69,7 +77,8 @@ router.get("/:slug", async (req, res) => {
   let page = parseInt(req.query.page) || 1;
   try {
     const foundCategory = await Category.findOne({ slug: req.params.slug });
-    const allProducts = await Product.find({ category: foundCategory.id })
+
+    const allProducts = await Product.find({ category: foundCategory._id })
       .sort("-createdAt")
       .skip(perPage * page - perPage)
       .limit(perPage)
@@ -77,10 +86,13 @@ router.get("/:slug", async (req, res) => {
 
     const count = await Product.count({ category: foundCategory.id });
 
+    const categories = await Category.find({});
+
     res.render("courses", {
       pageName: foundCategory.title,
       currentCategory: foundCategory,
       products: allProducts,
+      categories,
       current: page,
       breadcrumbs: req.breadcrumbs,
       home: "/courses/" + req.params.slug.toString() + "/?",
@@ -101,7 +113,7 @@ router.get("/:slug/:productCode", async (req, res) => {
       .sort("-createdAt")
       .limit(6)
       .populate("category");
-    console.log(`${product} saved successfully`);
+    // console.log(`${product} saved successfully`);
     res.render("course-detail", {
       pageName: product.title,
       product,

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const connectDB = async () => {
   try {
-    const uri = process.env.MONGO_URI || "mongodb://localhost/courses";
+    const uri = process.env.MONGO_URL || "mongodb://localhost/courses";
     mongoose.set('strictQuery', false);
     await mongoose
       .connect(uri, {

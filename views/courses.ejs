@@ -12,8 +12,10 @@
                     <div class="row align-items-center">
                         <div class="col col-lg-6">
                             <ul class="breadcrumb_nav unordered_list">
-                                <li><a href="index.html">Home</a></li>
-                                <li>Courses</li>
+                                <li><a href="/">Trang chủ</a></li>
+                                <li>
+                                    <%=pageName%>
+                                </li>
                             </ul>
                             <h1 class="page_title">Course Grid</h1>
                             <p class="page_description">
@@ -43,7 +45,7 @@
         ================================================== -->
         <section class="courses_archive_section section_space_lg">
             <div class="container">
-                <div class="filter_topbar">
+                <!-- <div class="filter_topbar">
                     <p class="filter_result">Showing <span>1-9</span> of <span>30</span> results</p>
                     <ul class="filter_buttons_list unordered_list">
                         <li>
@@ -62,6 +64,28 @@
                             </div>
                         </li>
                     </ul>
+                </div> -->
+                <div class="tabs_wrapper">
+                    <ul class="nav" role="tablist">
+                        <li role="presentation">
+                            <a href="/courses">
+                                <button data-bs-toggle="tab" data-bs-target="#teb_all" type="button"
+                                    role="tab" aria-selected="false">
+                                    <span>Tất Cả</span>
+                                </button>
+                            </a>
+                        </li>
+                        <%categories.forEach((category)=>{%>
+                            <li role="presentation">
+                                <a href="/courses/<%=category.slug%>">
+                                    <button data-bs-toggle="tab" data-bs-target="#teb_<%=category.slug%>" type="button" role="tab"
+                                        aria-selected="false">
+                                        <span><%=category.title%></span>
+                                    </button>
+                                </a>
+                            </li>
+                            <%})%>
+                    </ul>
                 </div>
                 <div class="row">
                     <% products.forEach((product)=> { %>
@@ -77,7 +101,7 @@
                                     <div class="item_content">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
                                             <ul class="item_category_list unordered_list">
-                                                <li><a href="/courses/<%=product.category.productCode%>">
+                                                <li><a href="/courses/<%=product.category.slug%>">
                                                         <%=product.category.title%>
                                                     </a></li>
                                             </ul>
@@ -95,7 +119,8 @@
                                                 <%=product.title%>
                                             </a>
                                         </h3>
-                                        <a class="btn_unfill" href="/courses/<%=product.category.slug%>/<%=product.productCode%>">
+                                        <a class="btn_unfill"
+                                            href="/courses/<%=product.category.slug%>/<%=product.productCode%>">
                                             <span class="btn_text">View Course</span>
                                             <span class="btn_icon">
                                                 <i class="fas fa-long-arrow-right"></i>

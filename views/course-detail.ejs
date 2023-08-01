@@ -12,9 +12,9 @@
                     <div class="row align-items-center">
                         <div class="col col-lg-7">
                             <ul class="breadcrumb_nav unordered_list">
-                                <li><a href="index.html">Home</a></li>
-                                <li><a href="course.html">Course</a></li>
-                                <li>Course Details V.1</li>
+                                <li><a href="/">Trang Chủ</a></li>
+                                <li><a href="/courses">Khóa Học</a></li>
+                                <li><%=pageName%></li>
                             </ul>
                             <h1 class="page_title">
                                 <%=product.title%>
@@ -42,8 +42,8 @@
                         </div>
                         <div class="col col-lg-5">
                             <div class="image_widget page_banner_image">
-                                <img src="/public/assets/images/banner/page_banner_image_1.jpg"
-                                    alt="Collab – Online Learning Platform">
+                                <img src="<%=product.imagePath%>"
+                                    alt="<%=product.title%>">
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                                 </h2>
                             </div>
                             <ul class="info_list unordered_list_block">
-                                <%var lines=product.description.split("<br />"); %>
+                                <!-- <%var lines=product.description.split("<"); %>
                                 <%lines.forEach((line)=>{%>
                                     <li>
                                         <i class="fas fa-check"></i>
@@ -74,7 +74,8 @@
                                             <%=line%>
                                         </span>
                                     </li>
-                                    <%})%>
+                                    <%})%> -->
+                                    <%-product.description%>
                             </ul>
                         </div>
                     </div>
@@ -120,12 +121,12 @@
                                         </div>
                                     </div>
                                     <h3 class="item_title">
-                                        <a href="/courses/<%=product.category.slug%>/<%=product.slug%>">
+                                        <a href="/courses/<%=product.category.slug%>/<%=product.productCode%>">
                                             <%=product.title%>
                                         </a>
                                     </h3>
                                     <a class="btn_unfill"
-                                        href="/courses/<%=product.category.slug%>/<%=product.slug%>">
+                                        href="/courses/<%=product.category.slug%>/<%=product.productCode%>">
                                         <span class="btn_text">View Course</span>
                                         <span class="btn_icon">
                                             <i class="fas fa-long-arrow-right"></i>

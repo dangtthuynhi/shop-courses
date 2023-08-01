@@ -22,7 +22,8 @@ for (let i = 0; i < 4; i++) {
                     title: faker.commerce.productName(),
                     imagePath: "https://antimatter.vn/wp-content/uploads/2022/10/hinh-anh-3d-800x500.jpg",
                     description: faker.commerce.productDescription(),
-                    price: faker.commerce.price()*10,
+                    price: faker.commerce.price() * 10,
+                    originalPrice: faker.commerce.price() * 20,
                     available: true,
                     linkForm: "https://www.youtube.com/watch?v=XmTLFtbv0Oo&ab_channel=KaiDinhOfficial"
                 })
