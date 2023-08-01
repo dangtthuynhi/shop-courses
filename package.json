@@ -7,11 +7,11 @@
   },
   "dependencies": {
     "@admin-bro/express": "^3.1.0",
-    "@admin-bro/mongoose": "^1.1.0",
+    "@admin-bro/mongoose": "^1.0.2",
     "@adminjs/express": "^6.0.0",
     "@adminjs/mongoose": "^4.0.0",
     "@faker-js/faker": "^8.0.2",
-    "admin-bro": "^4.0.1",
+    "admin-bro": "^3.4.0",
     "adminjs": "^7.0.9",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^3.2.0",
@@ -26,6 +26,8 @@
     "mongoose-slug-updater": "^3.3.0",
     "moongose": "^1.0.0",
     "morgan": "~1.9.1",
-    "react": "^18.2.0"
+    "passport": "^0.6.0",
+    "react": "^16.13.1",
+    "reinstall": "^2.0.0"
   }
 }

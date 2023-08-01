@@ -1,5 +1,7 @@
+require("dotenv").config();
 var createError = require('http-errors');
 var express = require('express');
+const passport = require("passport");
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -12,7 +14,6 @@ const mongoose = require("mongoose");
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var coursesRouter = require('./routes/courses');
-const adminRouter = require('./routes/admin');
 const connectDB = require("./config/db");
 
 var app = express();
@@ -25,14 +26,29 @@ app.set('view engine', 'ejs');
 app.use("/public", express.static((__dirname + '/public')));
 app.use("/", express.static((__dirname + '/')));
 
-app.use(logger('dev'));
+// app.use(logger('dev'));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
+// app.use(cookieParser());
+// app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(flash());
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/courses', coursesRouter);
+
+
+const adminRouter = require("./routes/admin");
+app.use("/admin", adminRouter);
+
+app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(
   session({
-    secret: 'hihi',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({
@@ -42,12 +58,9 @@ app.use(
     cookie: { maxAge: 60 * 1000 * 60 * 3 },
   })
 );
-
 app.use(flash());
-app.use("/admin", adminRouter);
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/courses', coursesRouter);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
